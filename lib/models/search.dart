@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app2/provider/Product_provider.dart';
+
+import '../screen/product_detail.dart';
 
 class DataSearch extends SearchDelegate {
-  final cities = [
-    'ff',
-    'vv',
-    'cc',
-    'yam',
-    'banda',
-    'Hamirpur',
-  ];
-  final recentCity = [
-    'kanpur',
-    'delhi',
-    'mumbai',
-  ];
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -44,21 +35,40 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
     throw UnimplementedError();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final conatainTitle = Provider.of<ProductProvider>(context);
+    final data = conatainTitle.items;
+    final recent = [
+      data[0].title,
+      data[1].title,
+      data[2].title,
+    ];
+    final title = [
+      data[0].title,
+      data[1].title,
+      data[2].title,
+      data[3].title,
+    ];
+
     final suggestionList = query.isEmpty
-        ? recentCity
-        : cities.where((element) => element.startsWith(query)).toList();
+        ? recent
+        : title.where((element) => element.startsWith(query)).toList();
 
     return ListView.builder(
       itemCount: suggestionList.length,
       itemBuilder: (context, index) => ListTile(
-        onTap: () {},
-        leading: Icon(Icons.location_city),
+        onTap: () {
+          // showResults(context);
+          Navigator.of(context).pushNamed(
+            ProductDetail.routeName,
+            arguments: data[index].id,
+          );
+        },
+        leading: Icon(Icons.receipt_rounded),
         title: RichText(
           text: TextSpan(
               text: suggestionList[index].substring(0, query.length),

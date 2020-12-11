@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'orders.dart';
+import '../models/image.dart';
+import 'dart:io';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   static const routeName = '/profile-screen';
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  // ignore: unused_field
+  File _userImageFile;
+
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,15 +42,13 @@ class Profile extends StatelessWidget {
                         colors: [Colors.pink[100], Colors.red[300]])),
               ),
               Container(
-                child: CircleAvatar(
-                  radius: 50,
-                ),
+                child: UserImagePicker(_pickedImage),
                 margin: EdgeInsets.all(15),
                 padding: EdgeInsets.only(top: 150),
               ),
               Container(
                 child: Text('userName'),
-                margin: EdgeInsets.only(top: 230, left: 150),
+                margin: EdgeInsets.only(top: 240, left: 200),
                 // padding: EdgeInsets.only(top: 200, left: 15),
               ),
             ],

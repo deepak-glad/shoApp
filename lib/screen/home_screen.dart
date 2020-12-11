@@ -43,37 +43,44 @@ class _ShopApp2State extends State<ShopApp2> {
         ),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Theme.of(context).accentColor),
+            icon: Icon(
+              Icons.home,
+              // color: Theme.of(context).accentColor,
+            ),
             label: 'Home',
             // backgroundColor: Colors.grey[500],
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.category,
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
             ),
             label: 'category',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.store,
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
             ),
             label: 'studio',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
             ),
             label: 'Profile',
           ),
         ],
         type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
+        selectedIconTheme: Theme.of(context).iconTheme,
         selectedItemColor: Colors.pink,
         iconSize: 30,
         onTap: onTabTapped,
+        // showSelectedLabels: true,
+        selectedLabelStyle: TextStyle(
+            color: Color(0xFFA67990), fontFamily: 'Montserrat', fontSize: 15.0),
         elevation: 55,
         // unselectedFontSize: 50,
         showUnselectedLabels: true,

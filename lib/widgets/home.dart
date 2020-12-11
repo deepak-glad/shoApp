@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app2/provider/Product_provider.dart';
+
+import 'package:shop_app2/screen/orders.dart';
 import 'package:shop_app2/widgets/drawer.dart';
 import 'package:shop_app2/widgets/product_overView.dart';
 import '../models/search.dart';
@@ -14,6 +16,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final containerFav = Provider.of<ProductProvider>(context, listen: false);
+
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -66,9 +69,11 @@ class Home extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                 ),
                 IconButton(
-                  icon: Icon(Icons.card_travel),
+                  icon: Icon(Icons.shopping_cart),
                   color: Theme.of(context).accentColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Orders.routeNamed);
+                  },
                 )
               ],
             ),

@@ -11,16 +11,16 @@ class ProductOverview extends StatelessWidget {
     return GridView.builder(
       itemCount: productss.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: productss[i],
-        // create: (c) => productss[i],
-        child: ProductItem(
-            // productss[i].id,
-            // productss[i].title,
-            // productss[i].imageUrl,
-            // productss[i].description,
-            // productss[i].isFavorite,
-            ),
-      ),
+          value: productss[i],
+          // create: (c) => productss[i],
+          child: ProductItem()),
+      // productss[i].id,
+      // productss[i].title,
+      // productss[i].imageUrl,
+      // productss[i].description,
+      // productss[i].isFavorite,
+      // ),
+      // ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 3 / 2,
         crossAxisCount: 2,

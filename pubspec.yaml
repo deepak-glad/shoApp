@@ -31,6 +31,8 @@ dependencies:
   provider: ^4.3.2+3
   favorite_button: ^0.0.3
   dio: ^3.0.10
+  image_picker: ^0.6.7+15
+  sliding_up_panel: ^1.0.2
 
 dev_dependencies:
   flutter_test:
