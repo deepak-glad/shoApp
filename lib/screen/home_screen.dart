@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:shop_app2/provider/cart.dart';
 import 'package:shop_app2/screen/category.dart';
-import 'package:shop_app2/screen/orders.dart';
+import 'package:shop_app2/screen/cart_screen.dart';
 import 'package:shop_app2/screen/profile.dart';
 import '../widgets/home.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shop_app2/widgets/drawer.dart';
+import '../widgets/cart_badge.dart';
+import '../models/search.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app2/provider/Product_provider.dart';
 
 class ShopApp2 extends StatefulWidget {
   @override
@@ -27,65 +35,128 @@ class _ShopApp2State extends State<ShopApp2> {
   final List<Widget> _children = [
     Home(),
     Category(),
-    Orders(),
+    Order(),
     Profile(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final containerFav = Provider.of<ProductProvider>(context, listen: false);
+    // final cart = Provider.of<Cart>(context, listen: false);
     return Scaffold(
+      drawer: AppDrawer(),
+      appBar: _currentIndex == 0
+          ? AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Myntra',
+                    // textAlign: TextAlign.start,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  Row(
+                    children: [
+                      PopupMenuButton(
+                        onSelected: (FilterOption selectedValue) {
+                          if (selectedValue == FilterOption.Only) {
+                            containerFav.favoritesOnly();
+                          } else {
+                            containerFav.showAll();
+                          }
+                          // print(selectedValue);
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          // color: Colors.red,
+                        ),
+                        itemBuilder: (_) => [
+                          PopupMenuItem(
+                            child: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
+                            value: FilterOption.Only,
+                          ),
+                          PopupMenuItem(
+                            value: FilterOption.All,
+                            child: Icon(Icons.favorite_border_sharp),
+                          ),
+                        ],
+                      ),
+                      // IconButton(
+                      //   icon: Icon(Icons.favorite),
+                      //   onPressed: () {
+                      //     // Navigator.of(context).pushNamed(Favorite.routeName);
+                      //   },
+                      //   color: Theme.of(context).accentColor,
+                      // ),
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          showSearch(context: context, delegate: DataSearch());
+                        },
+                        color: Theme.of(context).accentColor,
+                      ),
+                      Consumer<Cart>(
+                          builder: (_, cart, ch) => OrdersWiget(
+                                child: ch,
+                                value: cart.itemCount.toString(),
+                              ),
+                          child: IconButton(
+                            icon: Icon(Icons.shopping_cart),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Order.routeName);
+                            },
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+              backgroundColor: Colors.white,
+            )
+          : null,
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        // mouseCursor: SystemMouseCursors.text,
-        unselectedLabelStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          // color: Theme.of(context).accentColor,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+        ]),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+                gap: 8,
+                activeColor: Colors.black,
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                duration: Duration(milliseconds: 600),
+                tabBackgroundColor: Colors.grey[400],
+                tabs: [
+                  GButton(
+                    icon: LineIcons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: LineIcons.heart_o,
+                    text: 'Category',
+                  ),
+                  GButton(
+                    icon: Icons.store,
+                    text: 'Store',
+                  ),
+                  GButton(
+                    icon: LineIcons.user,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _currentIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                }),
+          ),
         ),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              // color: Theme.of(context).accentColor,
-            ),
-            label: 'Home',
-            // backgroundColor: Colors.grey[500],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.category,
-              // color: Theme.of(context).accentColor,
-            ),
-            label: 'category',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.store,
-              // color: Theme.of(context).accentColor,
-            ),
-            label: 'studio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              // color: Theme.of(context).accentColor,
-            ),
-            label: 'Profile',
-          ),
-        ],
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        selectedIconTheme: Theme.of(context).iconTheme,
-        selectedItemColor: Colors.pink,
-        iconSize: 30,
-        onTap: onTabTapped,
-        // showSelectedLabels: true,
-        selectedLabelStyle: TextStyle(
-            color: Color(0xFFA67990), fontFamily: 'Montserrat', fontSize: 15.0),
-        elevation: 55,
-        // unselectedFontSize: 50,
-        showUnselectedLabels: true,
-        // fixedColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Theme.of(context).primaryColor,
       ),
     );
   }

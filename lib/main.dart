@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app2/screen/orders.dart';
+import 'package:shop_app2/provider/cart.dart';
+import 'package:shop_app2/screen/ordered_screen.dart';
+
 import 'package:shop_app2/screen/personalInformation.dart';
 import 'package:shop_app2/screen/product_detail.dart';
 import 'package:shop_app2/screen/profile.dart';
-import 'package:shop_app2/widgets/slipup_panel.dart';
+import 'screen/cart_screen.dart';
 import 'screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'provider/Product_provider.dart';
 import 'screen/category.dart';
+import 'provider/order_provider.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProductProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: ProductProvider()),
+        ChangeNotifierProvider.value(value: Cart()),
+        ChangeNotifierProvider(create: (ctx) => Orders()),
+      ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          disabledColor: Colors.grey,
+          shadowColor: Color.fromRGBO(252, 224, 146, 0.9),
+          canvasColor: Colors.white,
           accentColor: Colors.black,
           primarySwatch: Colors.amber,
           errorColor: Colors.red,
           brightness: Brightness.light,
-          primaryColor: Colors.grey,
+          primaryColor: Colors.white,
           textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
           iconTheme:
               Theme.of(context).primaryIconTheme.copyWith(color: Colors.red),
@@ -31,10 +42,11 @@ class MyApp extends StatelessWidget {
         routes: {
           ProductDetail.routeName: (ctx) => ProductDetail(),
           Category.routeName: (ctx) => Category(),
-          Orders.routeNamed: (ctx) => Orders(),
+          Order.routeName: (ctx) => Order(),
           Profile.routeName: (ctx) => Profile(),
           Personal.routeName: (ctx) => Personal(),
-          SlidupPanel.routeName: (ctx) => SlidupPanel(),
+          OrderScreen.routeName: (ctx) => OrderScreen(),
+          // SlidupPanel.routeName: (ctx) => SlidupPanel(),
           // Favorite.routeName: (ctx) => Favorite(),
         },
       ),

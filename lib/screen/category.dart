@@ -2,6 +2,49 @@ import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
   static const routeName = '/category-screen';
+
+  _expande(BuildContext context, String image, String title, Color color) {
+    return ExpansionTile(
+      // tilePadding: EdgeInsets.only(left: 15),
+      backgroundColor: color,
+      collapsedBackgroundColor: color,
+      leading: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          // backgroundColor: Colors.,
+        ),
+        textAlign: TextAlign.left,
+      ),
+      title: Image.network(
+        image,
+        // height: 100,
+        // width: 100,
+        fit: BoxFit.fill,
+        height: 150,
+        width: 500,
+      ),
+      children: [
+        ExpansionTile(
+          title: Text(
+            'Sub title',
+          ),
+          children: <Widget>[
+            ListTile(
+              title: Text('data'),
+              onTap: () {},
+            )
+          ],
+        ),
+        ListTile(
+          title: Text('data'),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,53 +52,44 @@ class Category extends StatelessWidget {
         title: Text('Category'),
         backgroundColor: Colors.white,
       ),
-      body: Column(children: [
-        Stack(
-          children: [
-            Image.network(
-              'https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2017/03/AK-Haines-landscape-evening-012117-47.jpg?resize=750%2C186&ssl=1',
-              // height: 100,
-              // width: 100,
-              fit: BoxFit.fill,
-              height: 100,
-            ),
-            ListTile(
-              title: Text(
-                'Mens',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-                textAlign: TextAlign.left,
-              ),
-              contentPadding: EdgeInsets.only(right: 320, top: 20),
-              trailing: Icon(
-                Icons.arrow_downward,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        ListTile(
-          title: Text('Women'),
-
-          // trailing: Icon(Icons.arrow_forward),
-          // leading: Icon(Icons.open_with_rounded),
-          subtitle: Text('Clothes for women'),
-          onTap: () {
-            // Navigator.of(context).pushNamed(Orders.routeNamed);
-          },
-          // tileColor: Theme.of(context).primaryColor,
-        ),
-        Divider(),
-        ListTile(
-          title: Text('Myntra Inside'),
-          trailing: Icon(Icons.arrow_forward),
-          leading: Icon(Icons.add_business),
-          subtitle: Text('Perks,Privileges,Pride'),
-          onTap: () {},
-        ),
-      ]),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          _expande(
+            context,
+            'https://kreditings.com/wp-content/uploads/2020/05/girls-png-hd-6.png',
+            'Womenn',
+            Color.fromRGBO(255, 236, 150, 0.4),
+          ),
+          _expande(
+              context,
+              'https://freepngimg.com/thumb/cartoon/4-2-cartoon-transparent.png',
+              'KIDS',
+              Color.fromRGBO(253, 181, 255, 0.4)),
+          _expande(
+            context,
+            'https://png.pngtree.com/png-clipart/20190520/original/pngtree-child-child-children-boy-png-image_3916346.jpg',
+            'MENS',
+            Color.fromRGBO(181, 255, 239, 0.4),
+          ),
+          _expande(
+            context,
+            'https://kreditings.com/wp-content/uploads/2020/05/girls-png-hd-6.png',
+            'Womenn',
+            Color.fromRGBO(255, 236, 150, 0.4),
+          ),
+          _expande(
+              context,
+              'https://freepngimg.com/thumb/cartoon/4-2-cartoon-transparent.png',
+              'KIDS',
+              Color.fromRGBO(253, 181, 255, 0.4)),
+          _expande(
+            context,
+            'https://png.pngtree.com/png-clipart/20190520/original/pngtree-child-child-children-boy-png-image_3916346.jpg',
+            'MENS',
+            Color.fromRGBO(181, 255, 239, 0.4),
+          ),
+        ]),
+      ),
     );
   }
 }

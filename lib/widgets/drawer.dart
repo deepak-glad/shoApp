@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app2/screen/category.dart';
-import '../screen/orders.dart';
+import 'package:shop_app2/screen/ordered_screen.dart';
 import '../screen/profile.dart';
+import 'dart:io';
+import '../models/image.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  File _userImageFile;
+
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -13,17 +26,23 @@ class AppDrawer extends StatelessWidget {
           DrawerHeader(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [Colors.blue, Colors.red]),
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Colors.blue,
+                  Colors.red,
+                ],
+              ),
             ),
             padding: EdgeInsets.only(top: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                CircleAvatar(
-                  radius: 50,
+                Container(
+                  child: UserImagePicker(_pickedImage),
+                  margin: EdgeInsets.only(right: 10),
+                  height: 100,
                 ),
                 ListTile(
                   title: Text(
@@ -75,7 +94,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.online_prediction_rounded),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(Orders.routeNamed);
+              Navigator.of(context).pushNamed(OrderScreen.routeName);
             },
           ),
           Divider(

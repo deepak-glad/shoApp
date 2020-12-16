@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../screen/personalInformation.dart';
 
 class UserImagePicker extends StatefulWidget {
   UserImagePicker(this.imagepickFn);
@@ -30,13 +29,9 @@ class _UserImagePickerState extends State<UserImagePicker> {
     return Stack(
       children: [
         ListTile(
-          onTap: () {
-            Navigator.of(context).pushNamed(Personal.routeName);
-          },
-          onLongPress: _pickImage,
           contentPadding: EdgeInsets.only(right: 200),
           title: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColor,
+            // backgroundColor: Theme.of(context).errorColor,
             radius: 75,
             backgroundImage:
                 _pickedImage != null ? FileImage(_pickedImage) : null,
@@ -44,8 +39,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
         ),
         if (_pickedImage == null)
           FlatButton.icon(
-            padding: EdgeInsets.all(71),
-            icon: Icon(Icons.image),
+            padding: EdgeInsets.all(50),
+            icon: Icon(Icons.imagesearch_roller),
             onPressed: _pickImage,
             label: Text(''),
           ),

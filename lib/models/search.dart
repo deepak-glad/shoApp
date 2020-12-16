@@ -35,32 +35,26 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    throw UnimplementedError();
+    return throw UnimplementedError();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final conatainTitle = Provider.of<ProductProvider>(context);
+    final conatainTitle = Provider.of<ProductProvider>(context, listen: false);
     final data = conatainTitle.items;
-    final recent = [
-      data[0].title,
-      data[1].title,
-      data[2].title,
-    ];
-    final title = [
-      data[0].title,
-      data[1].title,
-      data[2].title,
-      data[3].title,
-    ];
 
+    final product = [
+      for (int i = 0; i < data.length; i++) data[i].title,
+    ];
     final suggestionList = query.isEmpty
-        ? recent
-        : title.where((element) => element.startsWith(query)).toList();
+        ? product
+        : product.where((element) => element.startsWith(query)).toList();
+    print(product);
 
     return ListView.builder(
       itemCount: suggestionList.length,
       itemBuilder: (context, index) => ListTile(
+        selected: true,
         onTap: () {
           // showResults(context);
           Navigator.of(context).pushNamed(
@@ -68,7 +62,10 @@ class DataSearch extends SearchDelegate {
             arguments: data[index].id,
           );
         },
-        leading: Icon(Icons.receipt_rounded),
+        leading: Icon(
+          Icons.receipt_rounded,
+          color: Theme.of(context).disabledColor,
+        ),
         title: RichText(
           text: TextSpan(
               text: suggestionList[index].substring(0, query.length),

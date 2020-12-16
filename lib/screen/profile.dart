@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'orders.dart';
 import '../models/image.dart';
 import 'dart:io';
+import '../screen/personalInformation.dart';
 
 class Profile extends StatefulWidget {
   static const routeName = '/profile-screen';
@@ -28,30 +28,35 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Stack(
-            children: [
-              Container(
-                // child: CircleAvatar(),
-                height: 200,
-                width: double.infinity,
-                // color: Colors.grey,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.center,
-                        end: Alignment.topLeft,
-                        colors: [Colors.pink[100], Colors.red[300]])),
-              ),
-              Container(
-                child: UserImagePicker(_pickedImage),
-                margin: EdgeInsets.all(15),
-                padding: EdgeInsets.only(top: 150),
-              ),
-              Container(
-                child: Text('userName'),
-                margin: EdgeInsets.only(top: 240, left: 200),
-                // padding: EdgeInsets.only(top: 200, left: 15),
-              ),
-            ],
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(Personal.routeName);
+            },
+            child: Stack(
+              children: [
+                Container(
+                  // child: CircleAvatar(),
+                  height: 200,
+                  width: double.infinity,
+                  // color: Colors.grey,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.center,
+                          end: Alignment.topLeft,
+                          colors: [Colors.pink[100], Colors.red[300]])),
+                ),
+                Container(
+                  child: UserImagePicker(_pickedImage),
+                  margin: EdgeInsets.all(15),
+                  padding: EdgeInsets.only(top: 150),
+                ),
+                Container(
+                  child: Text('userName'),
+                  margin: EdgeInsets.only(top: 240, left: 200),
+                  // padding: EdgeInsets.only(top: 200, left: 15),
+                ),
+              ],
+            ),
           ),
           Divider(),
           ListTile(
@@ -60,7 +65,7 @@ class _ProfileState extends State<Profile> {
             leading: Icon(Icons.open_with_rounded),
             subtitle: Text('Check your order status'),
             onTap: () {
-              Navigator.of(context).pushNamed(Orders.routeNamed);
+              // Navigator.of(context).pushNamed(Orders.routeName);
             },
             // tileColor: Theme.of(context).primaryColor,
           ),
