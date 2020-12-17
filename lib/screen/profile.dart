@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/image.dart';
-import 'dart:io';
+import 'package:provider/provider.dart';
+import 'package:shop_app2/provider/profile_provider.dart';
 import '../screen/personalInformation.dart';
 
 class Profile extends StatefulWidget {
@@ -11,13 +11,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // ignore: unused_field
-  File _userImageFile;
-
-  void _pickedImage(File image) {
-    _userImageFile = image;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +38,28 @@ class _ProfileState extends State<Profile> {
                           end: Alignment.topLeft,
                           colors: [Colors.pink[100], Colors.red[300]])),
                 ),
-                Container(
-                  child: UserImagePicker(_pickedImage),
-                  margin: EdgeInsets.all(15),
-                  padding: EdgeInsets.only(top: 150),
+                Consumer<ProfilePhoto>(
+                  builder: (ctx, value, _) => Container(
+                    child: CircleAvatar(
+                      backgroundImage: FileImage(value.photo),
+                      radius: 85,
+                    ),
+                    margin: EdgeInsets.all(15),
+                    padding: EdgeInsets.only(top: 90),
+                  ),
                 ),
-                Container(
-                  child: Text('userName'),
-                  margin: EdgeInsets.only(top: 240, left: 200),
-                  // padding: EdgeInsets.only(top: 200, left: 15),
+                Consumer<ProfilePhoto>(
+                  builder: (ctx, value, _) => Container(
+                    child: Text(
+                      value.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(top: 240, left: 200),
+                    // padding: EdgeInsets.only(top: 200, left: 15),
+                  ),
                 ),
               ],
             ),

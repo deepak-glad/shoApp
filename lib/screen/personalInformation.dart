@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/image.dart';
+import 'package:shop_app2/models/image.dart';
 import 'dart:io';
+import 'package:provider/provider.dart';
+import '../provider/profile_provider.dart';
 
 class Personal extends StatefulWidget {
   static const routeName = '/personal-information';
@@ -10,46 +12,58 @@ class Personal extends StatefulWidget {
 }
 
 class _PersonalState extends State<Personal> {
-  File _userImageFile;
+  final _titleController = TextEditingController();
+  File _pickedImage;
 
-  void _pickedImage(File image) {
-    _userImageFile = image;
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
+  void _savePlace() {
+    if (_titleController.text.isEmpty || _pickedImage == null) {
+      return;
+    }
+    Provider.of<ProfilePhoto>(context, listen: false)
+        .addItems(_titleController.text, _pickedImage);
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Information'),
+        title: Text('Add Profile'),
       ),
       body: Column(
-        children: [
-          Container(
-            // color: Theme.of(context).primaryColor,
-            child: UserImagePicker(_pickedImage),
-            margin: EdgeInsets.only(right: 100),
-            height: 100,
-          ),
-          ListTile(
-            // tileColor: Theme.of(context).primaryColor,
-            hoverColor: Theme.of(context).primaryColor,
-            subtitle: Text('username should be unique'),
-            leading: Text(
-              'USERNAME:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    UserImagePicker(_selectImage),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                      controller: _titleController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ),
-            title: TextField(
-              onTap: () {},
-              decoration: InputDecoration(
-                  alignLabelWithHint: true, hintText: 'USERNAME'),
-              autocorrect: true,
-              keyboardType: TextInputType.name,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-          )
+          ),
+          RaisedButton.icon(
+            icon: Icon(Icons.add),
+            label: Text('Add Place'),
+            onPressed: _savePlace,
+            elevation: 0,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            color: Theme.of(context).errorColor,
+          ),
         ],
       ),
     );
