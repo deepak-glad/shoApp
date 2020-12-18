@@ -54,10 +54,7 @@ class _ProfileState extends State<Profile> {
                             ),
                       radius: 90,
                     ),
-                    margin: EdgeInsets.only(
-                      top: 90,
-                      left: 20,
-                    ),
+                    margin: EdgeInsets.only(top: 90, left: 20),
                     // padding: EdgeInsets.only(top: 9),
                   ),
                 ),

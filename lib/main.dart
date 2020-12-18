@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app2/provider/cart.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
+import 'package:shop_app2/screen/login_screen.dart';
+
 import 'package:shop_app2/screen/ordered_screen.dart';
 
 import 'package:shop_app2/screen/personalInformation.dart';
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
           iconTheme:
               Theme.of(context).primaryIconTheme.copyWith(color: Colors.red),
         ),
-        home: ShopApp2(),
+        home: LoginScreen(),
         routes: {
           ProductDetail.routeName: (ctx) => ProductDetail(),
           Category.routeName: (ctx) => Category(),
