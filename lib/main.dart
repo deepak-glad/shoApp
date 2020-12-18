@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.amber,
           errorColor: Colors.red,
           brightness: Brightness.light,
-          primaryColor: Colors.white,
-          textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
+          primaryColor: Colors.black,
+          // textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
           iconTheme:
               Theme.of(context).primaryIconTheme.copyWith(color: Colors.red),
         ),

@@ -11,10 +11,15 @@ class Order extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Theme.of(context).canvasColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Orders'),
+              Text(
+                'Orders',
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
               FlatButton(
                 onPressed: () {
                   Provider.of<Orders>(context, listen: false)
@@ -52,7 +57,7 @@ class Order extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       ),
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).canvasColor,
                     ),
                   ],
                 ),

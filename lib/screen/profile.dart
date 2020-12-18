@@ -13,9 +13,13 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    var deviceSize = MediaQuery.of(context).size * 10.0;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Theme.of(context).accentColor),
+        ),
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -38,29 +42,54 @@ class _ProfileState extends State<Profile> {
                           end: Alignment.topLeft,
                           colors: [Colors.pink[100], Colors.red[300]])),
                 ),
+                // if (Error != null)
                 Consumer<ProfilePhoto>(
                   builder: (ctx, value, _) => Container(
+                    // color: Colors.grey,
                     child: CircleAvatar(
-                      backgroundImage: FileImage(value.photo),
-                      radius: 85,
+                      backgroundImage: value.photo != null
+                          ? FileImage(value.photo)
+                          : NetworkImage(
+                              'https://mpng.subpng.com/20180402/uaw/kisspng-decision-making-computer-icons-information-manager-5ac2eeb55814f4.7738334015227245333608.jpg',
+                            ),
+                      radius: 90,
                     ),
-                    margin: EdgeInsets.all(15),
-                    padding: EdgeInsets.only(top: 90),
+                    margin: EdgeInsets.only(
+                      top: 90,
+                      left: 20,
+                    ),
+                    // padding: EdgeInsets.only(top: 9),
                   ),
                 ),
-                Consumer<ProfilePhoto>(
-                  builder: (ctx, value, _) => Container(
-                    child: Text(
-                      value.title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                if (Error != null)
+                  Consumer<ProfilePhoto>(
+                    builder: (ctx, value, _) => Container(
+                      // color: Colors.green,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (value.title.length <= 20)
+                            Text(
+                              value.title != null ? value.title : 'USERNAME',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                          if (value.title.length >= 19) Text(value.title),
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(Personal.routeName);
+                            },
+                          ),
+                        ],
                       ),
+                      margin: EdgeInsets.only(top: 240, left: 200),
+                      // padding: EdgeInsets.only(top: 200, left: 15),
                     ),
-                    margin: EdgeInsets.only(top: 240, left: 200),
-                    // padding: EdgeInsets.only(top: 200, left: 15),
                   ),
-                ),
               ],
             ),
           ),

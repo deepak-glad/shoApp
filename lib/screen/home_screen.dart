@@ -47,6 +47,7 @@ class _ShopApp2State extends State<ShopApp2> {
       drawer: AppDrawer(),
       appBar: _currentIndex == 0
           ? AppBar(
+              iconTheme: IconThemeData(color: Colors.black),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -87,7 +88,7 @@ class _ShopApp2State extends State<ShopApp2> {
                       // IconButton(
                       //   icon: Icon(Icons.favorite),
                       //   onPressed: () {
-                      //     // Navigator.of(context).pushNamed(Favorite.routeName);
+                      //      Navigator.of(context).pushNamed(Favorite.routeName);
                       //   },
                       //   color: Theme.of(context).accentColor,
                       // ),
@@ -96,7 +97,6 @@ class _ShopApp2State extends State<ShopApp2> {
                         onPressed: () {
                           showSearch(context: context, delegate: DataSearch());
                         },
-                        color: Theme.of(context).accentColor,
                       ),
                       Consumer<Cart>(
                           builder: (_, cart, ch) => OrdersWiget(
@@ -113,7 +113,7 @@ class _ShopApp2State extends State<ShopApp2> {
                   ),
                 ],
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).canvasColor,
             )
           : null,
       body: _children[_currentIndex],

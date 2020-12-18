@@ -12,8 +12,12 @@ class ProductDetail extends StatelessWidget {
         .findById(productId);
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedProduct.id),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          loadedProduct.id,
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Theme.of(context).canvasColor,
       ),
       body: SingleChildScrollView(
         child: Column(

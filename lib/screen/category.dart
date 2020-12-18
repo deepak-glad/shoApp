@@ -49,8 +49,12 @@ class Category extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Category'),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          'Category',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+        backgroundColor: Theme.of(context).canvasColor,
       ),
       body: SingleChildScrollView(
         child: Column(children: [

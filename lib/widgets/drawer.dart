@@ -36,7 +36,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 Consumer<ProfilePhoto>(
                   builder: (ctx, value, _) => Container(
                     child: CircleAvatar(
-                      backgroundImage: FileImage(value.photo),
+                      backgroundImage: value.photo != null
+                          ? FileImage(value.photo)
+                          : NetworkImage(
+                              'https://mpng.subpng.com/20180402/uaw/kisspng-decision-making-computer-icons-information-manager-5ac2eeb55814f4.7738334015227245333608.jpg',
+                            ),
                     ),
                     margin: EdgeInsets.only(right: 180),
                     height: 100,
@@ -45,7 +49,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 Consumer<ProfilePhoto>(
                   builder: (ctx, value, _) => ListTile(
                     title: Text(
-                      value.title,
+                      value.title != null ? value.title : 'USERNAME',
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
