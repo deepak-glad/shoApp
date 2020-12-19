@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final devicesize = MediaQuery.of(context);
     return Stack(
       children: [
         Container(
@@ -45,8 +46,10 @@ class _LoginState extends State<Login> {
         ),
         Container(
           margin: EdgeInsets.only(top: 150, left: 50),
-          height: _isLogin ? 320 : 380,
-          width: 300,
+          height: _isLogin
+              ? devicesize.size.height / 2 - 20
+              : (devicesize.size.height / 2) + 25,
+          width: (devicesize.size.width * 3) / 4,
           // color: Colors.white,
           decoration: BoxDecoration(
               color: Colors.white,

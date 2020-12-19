@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
 import 'package:shop_app2/screen/category.dart';
@@ -12,6 +14,62 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+
+  Future<bool> _isBiometricAvailable() async {
+    bool isAvailable = false;
+    try {
+      isAvailable = await _localAuthentication.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return isAvailable;
+
+    isAvailable
+        ? print('Biometric is available')
+        : print('Biometric is not available');
+    return isAvailable;
+  }
+
+  Future<void> _getBiometricTypes() async {
+    List<BiometricType> listofBiometric;
+    try {
+      listofBiometric = await _localAuthentication.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+    print(listofBiometric);
+  }
+
+  Future<void> _authenticateUser() async {
+    bool isAuthenticated = false;
+    try {
+      isAuthenticated = await _localAuthentication.authenticateWithBiometrics(
+        localizedReason:
+            "Please authenticate to view your transaction overview",
+        useErrorDialogs: true,
+        stickyAuth: true,
+      );
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+
+    isAuthenticated
+        ? print('User is authenticated!')
+        : print('User is not authenticated.');
+
+    if (isAuthenticated) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => OrderScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -39,9 +97,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     child: CircleAvatar(
                       backgroundImage: value.photo != null
                           ? FileImage(value.photo)
-                          : NetworkImage(
-                              'https://mpng.subpng.com/20180402/uaw/kisspng-decision-making-computer-icons-information-manager-5ac2eeb55814f4.7738334015227245333608.jpg',
-                            ),
+                          : AssetImage('assets/profile/dummyprofile.jpg'),
                     ),
                     margin: EdgeInsets.only(right: 180),
                     height: 100,
@@ -51,6 +107,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   builder: (ctx, value, _) => ListTile(
                     title: Text(
                       value.title != null ? value.title : 'USERNAME',
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -96,16 +153,19 @@ class _AppDrawerState extends State<AppDrawer> {
             color: Colors.black45,
           ),
           ListTile(
-            title: Text(
-              'Orders',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            leading: Icon(Icons.online_prediction_rounded),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(OrderScreen.routeName);
-            },
-          ),
+              title: Text(
+                'Orders',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              leading: Icon(Icons.online_prediction_rounded),
+              onTap: () async {
+                if (await _isBiometricAvailable()) {
+                  await _getBiometricTypes();
+                  await _authenticateUser();
+                }
+
+                Navigator.of(context).pushNamed(OrderScreen.routeName);
+              }),
           Divider(
             color: Colors.black45,
           ),
@@ -134,7 +194,7 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {},
           ),
           RaisedButton.icon(
-            color: Colors.blueAccent,
+            // color: Colors.blueAccent[350],
             icon: Icon(Icons.logout),
             label: Text('Logout'),
             onPressed: () {

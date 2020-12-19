@@ -17,14 +17,19 @@ class Order extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Orders',
+                'CART',
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
-              FlatButton(
+              RaisedButton(
                 onPressed: () {
                   Provider.of<Orders>(context, listen: false)
                       .addOrder(cart.items.values.toList(), cart.totalAmount);
                   cart.clear();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('successfully ordered'),
+                    backgroundColor: Theme.of(context).errorColor,
+                    duration: Duration(seconds: 3),
+                  ));
                 },
                 child: Text(
                   'ORDER NOW',

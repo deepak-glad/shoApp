@@ -3,19 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:shop_app2/provider/cart.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
 import 'package:shop_app2/screen/login_screen.dart';
-
 import 'package:shop_app2/screen/ordered_screen.dart';
-
 import 'package:shop_app2/screen/personalInformation.dart';
 import 'package:shop_app2/screen/product_detail.dart';
 import 'package:shop_app2/screen/profile.dart';
+import 'package:shop_app2/screen/splash_screen.dart';
 import 'screen/cart_screen.dart';
 import 'screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'provider/Product_provider.dart';
 import 'screen/category.dart';
 import 'provider/order_provider.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -52,12 +50,15 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SplashScreen();
+            } else if (snapshot.hasData) {
               return ShopApp2();
             }
             return LoginScreen();
           },
         ),
+        // home: SplashScreen(),
         routes: {
           ProductDetail.routeName: (ctx) => ProductDetail(),
           Category.routeName: (ctx) => Category(),

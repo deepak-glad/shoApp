@@ -14,9 +14,10 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    var deviceSize = MediaQuery.of(context).size * 10.0;
+    var deviceSize = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Profile',
           style: TextStyle(color: Theme.of(context).accentColor),
@@ -50,12 +51,11 @@ class _ProfileState extends State<Profile> {
                     child: CircleAvatar(
                       backgroundImage: value.photo != null
                           ? FileImage(value.photo)
-                          : NetworkImage(
-                              'https://mpng.subpng.com/20180402/uaw/kisspng-decision-making-computer-icons-information-manager-5ac2eeb55814f4.7738334015227245333608.jpg',
-                            ),
+                          : AssetImage('assets/profile/dummyprofile.jpg'),
                       radius: 90,
                     ),
-                    margin: EdgeInsets.only(top: 90, left: 20),
+                    margin: EdgeInsets.only(
+                        top: deviceSize.size.height / 4 - 30, left: 20),
                     // padding: EdgeInsets.only(top: 9),
                   ),
                 ),
@@ -66,15 +66,16 @@ class _ProfileState extends State<Profile> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // if (value.title.length <= 20)
-                          Text(
-                            value.title != null ? value.title : 'USERNAME',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
+                          Expanded(
+                            child: Text(
+                              value.title != null ? value.title : 'USERNAME',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                          // if (value.title.length >= 19) Text(value.title),
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
@@ -163,8 +164,9 @@ class _ProfileState extends State<Profile> {
           Divider(),
           Divider(),
           ListTile(
+            leading: Icon(Icons.query_builder),
             title: Text(
-              '             FAQs',
+              'FAQs',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 12,
@@ -176,7 +178,8 @@ class _ProfileState extends State<Profile> {
             },
           ),
           ListTile(
-            title: Text('             CANTACT US',
+            leading: Icon(Icons.contact_page),
+            title: Text('CANTACT US',
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
@@ -185,8 +188,9 @@ class _ProfileState extends State<Profile> {
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.more),
             title: Text(
-              '             MORE',
+              'MORE',
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w400,

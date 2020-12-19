@@ -85,9 +85,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
               radius: 75,
               backgroundImage: _pickedImage != null
                   ? FileImage(_pickedImage)
-                  : NetworkImage(
-                      'https://mpng.subpng.com/20180402/uaw/kisspng-decision-making-computer-icons-information-manager-5ac2eeb55814f4.7738334015227245333608.jpg',
-                    ),
+                  : AssetImage('assets/profile/dummyprofile.jpg'),
             ),
           ),
           IconButton(

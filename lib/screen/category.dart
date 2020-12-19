@@ -18,7 +18,7 @@ class Category extends StatelessWidget {
         ),
         textAlign: TextAlign.left,
       ),
-      title: Image.network(
+      title: Image.asset(
         image,
         // height: 100,
         // width: 100,
@@ -60,35 +60,29 @@ class Category extends StatelessWidget {
         child: Column(children: [
           _expande(
             context,
-            'https://kreditings.com/wp-content/uploads/2020/05/girls-png-hd-6.png',
-            'Womenn',
+            'assets/category/women.png',
+            'Women',
             Color.fromRGBO(255, 236, 150, 0.4),
           ),
-          _expande(
-              context,
-              'https://freepngimg.com/thumb/cartoon/4-2-cartoon-transparent.png',
-              'KIDS',
+          _expande(context, 'assets/category/cartoon.png', 'KIDS',
               Color.fromRGBO(253, 181, 255, 0.4)),
           _expande(
             context,
-            'https://png.pngtree.com/png-clipart/20190520/original/pngtree-child-child-children-boy-png-image_3916346.jpg',
+            'assets/category/menn.png',
             'MENS',
             Color.fromRGBO(181, 255, 239, 0.4),
           ),
           _expande(
             context,
-            'https://kreditings.com/wp-content/uploads/2020/05/girls-png-hd-6.png',
-            'Womenn',
+            'assets/category/women.png',
+            'Women',
             Color.fromRGBO(255, 236, 150, 0.4),
           ),
-          _expande(
-              context,
-              'https://freepngimg.com/thumb/cartoon/4-2-cartoon-transparent.png',
-              'KIDS',
+          _expande(context, 'assets/category/cartoon.png', 'KIDS',
               Color.fromRGBO(253, 181, 255, 0.4)),
           _expande(
             context,
-            'https://png.pngtree.com/png-clipart/20190520/original/pngtree-child-child-children-boy-png-image_3916346.jpg',
+            'assets/category/menn.png',
             'MENS',
             Color.fromRGBO(181, 255, 239, 0.4),
           ),

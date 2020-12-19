@@ -41,6 +41,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+        // android.useAndroidX=true
+        // android.enableJetifier=true
     }
 
     buildTypes {
@@ -61,5 +63,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.android.support:multidex:1.0.3'
+    api "androidx.core:core:1.1.0-aplha03"
 }
 apply plugin: 'com.google.gms.google-services'
