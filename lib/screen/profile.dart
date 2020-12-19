@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
@@ -65,15 +66,15 @@ class _ProfileState extends State<Profile> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          if (value.title.length <= 20)
-                            Text(
-                              value.title != null ? value.title : 'USERNAME',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
+                          // if (value.title.length <= 20)
+                          Text(
+                            value.title != null ? value.title : 'USERNAME',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
                             ),
-                          if (value.title.length >= 19) Text(value.title),
+                          ),
+                          // if (value.title.length >= 19) Text(value.title),
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
@@ -194,9 +195,12 @@ class _ProfileState extends State<Profile> {
             ),
             onTap: () {},
           ),
-          FlatButton(
-            child: Text('LOGOUT'),
-            onPressed: () {},
+          FlatButton.icon(
+            icon: Icon(Icons.logout),
+            label: Text('LOGOUT'),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
             color: Colors.red,
           ),
           Divider(),

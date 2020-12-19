@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
@@ -131,6 +132,14 @@ class _AppDrawerState extends State<AppDrawer> {
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
             onTap: () {},
+          ),
+          RaisedButton.icon(
+            color: Colors.blueAccent,
+            icon: Icon(Icons.logout),
+            label: Text('Logout'),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
           ),
           Center(
             child: Text(

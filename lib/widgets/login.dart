@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
-  Login(this.submitFn);
-  final void Function(
-      String username, String email, String password, bool isLogin) submitFn;
+  Login(this.submitFn, this.isLoading);
+  final bool isLoading;
+  final void Function(String username, String email, String password,
+      bool isLogin, BuildContext ctx) submitFn;
 
   @override
   _LoginState createState() => _LoginState();
@@ -22,11 +23,15 @@ class _LoginState extends State<Login> {
 
     if (isValid) {
       _formKey.currentState.save();
+      print(_username);
+      print(_password);
+      print(_email);
       widget.submitFn(
-        _username,
-        _email,
-        _password,
+        _username.trim(),
+        _email.trim(),
+        _password.trim(),
         _isLogin,
+        context,
       );
     }
   }
@@ -125,22 +130,24 @@ class _LoginState extends State<Login> {
                                 BorderRadius.all(Radius.circular(10)))),
                   ),
                   SizedBox(height: 20),
-                  RaisedButton(
-                    color: !_isLogin ? Colors.green : Colors.cyan,
-                    child: Text(_isLogin ? 'LOGIN' : 'SINGUP'),
-                    onPressed: _trysave,
-                  ),
-                  FlatButton(
-                    // color: _isLogin ? Colors.green : null,
-                    child: Text(_isLogin
-                        ? 'Create New Account'
-                        : 'Already have account'),
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                  ),
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      color: _isLogin ? Colors.cyan : Colors.cyan,
+                      child: Text(_isLogin ? 'LOGIN' : 'SINGUP'),
+                      onPressed: _trysave,
+                    ),
+                  if (!widget.isLoading)
+                    FlatButton(
+                      child: Text(_isLogin
+                          ? 'Create New Account'
+                          : 'Already have account'),
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                    ),
                 ],
               ),
             ),

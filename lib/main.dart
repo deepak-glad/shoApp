@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app2/provider/cart.dart';
 import 'package:shop_app2/provider/profile_provider.dart';
@@ -15,7 +16,13 @@ import 'provider/Product_provider.dart';
 import 'screen/category.dart';
 import 'provider/order_provider.dart';
 
-void main() => runApp(MyApp());
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -42,7 +49,15 @@ class MyApp extends StatelessWidget {
           iconTheme:
               Theme.of(context).primaryIconTheme.copyWith(color: Colors.red),
         ),
-        home: LoginScreen(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (ctx, snapshot) {
+            if (snapshot.hasData) {
+              return ShopApp2();
+            }
+            return LoginScreen();
+          },
+        ),
         routes: {
           ProductDetail.routeName: (ctx) => ProductDetail(),
           Category.routeName: (ctx) => Category(),
