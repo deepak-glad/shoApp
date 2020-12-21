@@ -163,8 +163,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   await _getBiometricTypes();
                   await _authenticateUser();
                 }
-
-                Navigator.of(context).pushNamed(OrderScreen.routeName);
+                // Navigator.of(context).pop();
+                // Navigator.of(context).pushNamed(OrderScreen.routeName);
               }),
           Divider(
             color: Colors.black45,

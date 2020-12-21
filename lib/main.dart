@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => ProfilePhoto()),
       ],
       child: MaterialApp(
+        title: 'SHOP',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           disabledColor: Colors.grey,
